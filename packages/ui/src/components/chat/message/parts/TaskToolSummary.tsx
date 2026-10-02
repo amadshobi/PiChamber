@@ -211,9 +211,15 @@ export const TaskToolSummary: React.FC<{
         }
     };
 
-    const agentType = typeof input?.subagent_type === 'string'
-        ? input.subagent_type
-        : 'subagent';
+    const agentType = typeof input?.agent === 'string' && input.agent.trim()
+        ? input.agent.trim()
+        : typeof input?.subagent_type === 'string' && input.subagent_type.trim()
+            ? input.subagent_type.trim()
+            : Array.isArray(input?.chain) && typeof (input.chain[0] as { agent?: unknown } | undefined)?.agent === 'string'
+                ? String((input.chain[0] as { agent?: string }).agent)
+                : Array.isArray(input?.tasks) && typeof (input.tasks[0] as { agent?: unknown } | undefined)?.agent === 'string'
+                    ? String((input.tasks[0] as { agent?: string }).agent)
+                    : 'subagent';
 
     if (entries.length === 0 && !hasOutput && !sessionId) {
         return (

@@ -15,7 +15,7 @@ export type ToolStateWithMetadata = ToolStateUnion & {
 // and output through the common expandable renderer.
 const STATIC_TOOL_NAMES = new Set<string>(['read', 'skill']);
 
-const STANDALONE_TOOL_NAMES = new Set<string>(['task']);
+const STANDALONE_TOOL_NAMES = new Set<string>(['task', 'subagent']);
 
 export const normalizeToolName = (toolName: unknown): string => {
     if (typeof toolName !== 'string') return '';
